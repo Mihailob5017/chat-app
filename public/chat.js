@@ -1,33 +1,13 @@
-var user='';
+var user = "";
 var socket = io();
+//a screen pops up and asks the for the username
+//once u loged in it sends other user a message that u have joined the party
+//u can send and recive messages
+//it will automaticly notify all the other users that u are typing while u are typing
 
 
-var submit=document.querySelector('#submit');
-submit.addEventListener('click',e=>{
-    e.preventDefault();
-    user=document.querySelector('#username').value;
-    document.querySelector('#islogedin').innerHTML=user;
-    document.querySelector('#message-btn').disabled=false;
-})
-
-
-
-
-var sendMsg=document.querySelector('#message-btn');
-sendMsg.addEventListener('click',e=>{
-    e.preventDefault();
-    let object={username:document.getElementById('islogedin').innerText,message:document.querySelector('#message').value}
-
-    document.querySelector('.message-box').innerHTML+=`<li class='msg-sent'><h3>${object.username}</h3><p>${object.message}</p></li>`;
-    socket.emit('chat message',object)
-    document.querySelector('#message').value='';
-})
-
-socket.on('chat message',obj=>{
-    const {username,message}=obj;
-     document.querySelector('.message-box').innerHTML+=`<li class='msg-recived'><h3>${username}</h3><p>${message}</p></li>`;
-})
-
-
-
+//WIll THING ABOUT THESE
+//maybe add a feture to create a private group that will only emit messages to the people of the selected group
+//add the possiblaty to hide messages to all users except the select ones 
+//maybe create a login or a signup forum connected to firebase
 
