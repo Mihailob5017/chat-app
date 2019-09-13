@@ -12,7 +12,13 @@ io.on("connection", socket => {
   socket.on("chat message", msg => {
     socket.broadcast.emit("chat message", msg);
   });
- socket.on('typing',msg=>{
-   socket.broadcast.emit('typing',msg);
- })
+  socket.on("typing", msg => {
+    socket.broadcast.emit("typing", msg);
+  });
+  socket.on("is online", username => {
+    socket.broadcast.emit("is online", username);
+  });
+  socket.on("disconnected", username => {
+    socket.broadcast.emit("disconnected", username);
+  });
 });
