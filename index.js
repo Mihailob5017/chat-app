@@ -18,7 +18,4 @@ io.on("connection", socket => {
   socket.on("is online", username => {
     socket.broadcast.emit("is online", username);
   });
-  socket.on("disconnected", username => {
-    socket.broadcast.emit("disconnected", username);
-  });
 });

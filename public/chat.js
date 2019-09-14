@@ -37,10 +37,7 @@ const EnableChat = (user, socket) => {
   setTimeout(() => {
     document.body.removeChild(document.getElementById("welcome-msg"));
     document.body.innerHTML += `<div id="user-name">${user}</div>`;
-    document //                                                         NEEDS FIXING
-      .getElementById("user-name")
-      .addEventListener("click", (socket, user) => Disconnect(socket, user));
-  }, 5450);
+  }, 3450);
   //
   //
   //
@@ -50,23 +47,11 @@ const EnableChat = (user, socket) => {
     document.getElementById("welcome-msg").style.animationName = "fade";
     setTimeout(() => {
       document.body.removeChild(document.getElementById("welcome-msg"));
-    }, 5450);
+    }, 3450);
     //
     //
-    //                                                                    NEEDS FIXING
-    //alert other users that the user is discconected
-    socket.on("disconnected", username => {
-      alert(`${username} has disconnected`);
-    });
-
     //will add a chat enabled function where most of the code will be stored,maybe even import that code from another js page
   });
 };
 
 //ask the user if
-const Disconnect = (socket, user) => {
-  if (window.confirm("Are you sure you want to disconnect ?")) {
-    socket.emit("disconnected", user);
-    document.location.reload();
-  }
-};
