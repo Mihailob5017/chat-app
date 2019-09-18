@@ -29,7 +29,7 @@ const EnableChat = () => {
     <ul id='chat-room'>
     </ul>
       <form id='msg-container'>
-        <input type='text' autocomplete='off' required id='msg' placehoalder='Enter Message'/>
+        <input type='text' autocomplete='off' required id='msg' placeholder='Enter Message'/>
         <input type="submit" class='msg-button' value='Send'/>
       </form>
     </div>`;

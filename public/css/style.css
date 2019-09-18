@@ -99,15 +99,15 @@ body {
   left: 0;
   width: 100%;
   height: 36rem;
-  background-color: rgba(166, 168, 175, 0.5);
+  background-color: transparent;
 }
 #chat-room {
+  background-color: rgba(166, 168, 175, 0.5);
   position: relative;
   top: 0%;
   left: 0.2%;
   width: 99.6%;
   height: 90%;
-  background-color: transparent;
   border-radius: 10px;
   border: 1.5px solid lightgreen;
   overflow-y: scroll;
@@ -131,6 +131,7 @@ body {
   border-radius: 5px;
   border: 1.5px solid lightgreen;
   background-color: transparent;
+  color: white;
   transition: 500ms;
   cursor: pointer;
   flex-basis: 10%;
@@ -157,7 +158,7 @@ body {
 .msg-sent *:first-child {
   text-align: right;
   font-size: 1.2rem;
-  color: black;
+  color: white;
 }
 .msg-sent *:last-child {
   width: 100%;
@@ -182,7 +183,7 @@ body {
   padding-left: 5px;
   text-align: left;
   font-size: 1.2rem;
-  color: black;
+  color: white;
 }
 .msg-recived *:last-child {
   width: 100%;
