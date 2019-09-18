@@ -1,18 +1,5 @@
-//a screen pops up and asks the for the username
-//once u loged in it sends other user a message that u have joined the party
-//u can send and recive messages
-//it will automaticly notify all the other users that u are typing while u are typing
-
-//WIll THING ABOUT THESE
-//maybe add a feture to create a private group that will only emit messages to the people of the selected group
-//add the possiblaty to hide messages to all users except the select ones
-//maybe create a login or a signup forum connected to firebase
-
 var user = '';
 var socket = io();
-
-//onload a popup will ask the user to enter his username,and once a user submits his name,it will popout of the screen and enable for the user to chat with other users
-
 document.getElementById('login').style.animationName = 'popup';
 document.getElementById('submit-button').addEventListener('click', e => {
 	e.preventDefault();
@@ -35,15 +22,16 @@ const EnableChat = () => {
 	socket.emit('is online', user);
 	setTimeout(() => {
 		document.body.removeChild(document.getElementById('welcome-msg'));
-		document.body.innerHTML += `<div id="user-name">${user}</div>`;
+		document.body.innerHTML += `<div id="user-name">Log out</div>`;
+		document.body.innerHTML += `<div id='get-curr-users'>${user}</div>`;
 		document.body.innerHTML += `
     <div id='chat-area'>
     <ul id='chat-room'>
     </ul>
-      <div id='msg-container'>
-        <input type='text' autocomplete='off' id='msg' placehoalder='Enter Message'/>
-        <button class='msg-button'>Send</button>
-      </div>
+      <form id='msg-container'>
+        <input type='text' autocomplete='off' required id='msg' placehoalder='Enter Message'/>
+        <input type="submit" class='msg-button' value='Send'/>
+      </form>
     </div>`;
 		CreateChat();
 	}, 3450);
@@ -63,30 +51,48 @@ const EnableChat = () => {
 		//will add a chat enabled function where most of the code will be stored,maybe even import that code from another js page
 	});
 };
-
 //ask the user if
 const CreateChat = () => {
-	const msgBtn = document.querySelector('.msg-button');
-	msgBtn.addEventListener(
-		'click',
-		() => {
-			if (document.getElementById('msg').value !== '') {
-				socket.emit('chat message', {
-					user: user,
-					message: document.getElementById('msg').value
-				});
-				document.getElementById('chat-room').innerHTML += `<li class='msg-sent'>
+	const msgBtn = document.querySelector('#msg-container');
+	const getUsers = document.getElementById('get-curr-users');
+	msgBtn.addEventListener('submit', event => {
+		event.preventDefault();
+		event.stopPropagation();
+		socket.emit('chat message', {
+			user: user,
+			message: document.getElementById('msg').value
+		});
+		document.getElementById('chat-room').innerHTML += `<li class='msg-sent'>
         <h5>You:</h5>
         <p>${document.getElementById('msg').value}</p>
-    </li>`;
-				document.getElementById('msg').value = '';
-			} else {
-				alert('You need to enter something');
-			}
-		},
-		false
-	);
+	</li>`;
+	document.getElementById('msg').value='';
+	});
+	//
+	//
+	//
+
+	document.getElementById('user-name').addEventListener('click', async () => {
+		if (confirm('are you sure you want to Log Out')) {
+			await socket.emit('dissconnect', user);
+			window.location.reload(true);
+		}
+	});
+	//
+	//
+	//
+	getUsers.addEventListener('click', () => {
+		socket.emit('get users', user);
+	});
 };
+socket.on('dissconnect', username => {
+	document.body.innerHTML += `<div id='welcome-msg'>${username} has left Chat's</div>`;
+	document.getElementById('welcome-msg').style.animationName = 'fade';
+	setTimeout(() => {
+		document.body.removeChild(document.getElementById('welcome-msg'));
+		CreateChat();
+	}, 3450);
+});
 socket.on('chat message', obj => {
 	const { user, message } = obj;
 	document.getElementById('chat-room').innerHTML += `<li class='msg-recived'>

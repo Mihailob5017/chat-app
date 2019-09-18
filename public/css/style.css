@@ -6,6 +6,7 @@
 }
 body {
   overflow-x: hidden;
+  background-image: url('./bakcground.jpg');
 }
 #login {
   background-color: rgba(32, 197, 26, 0.2);
@@ -47,17 +48,24 @@ body {
   cursor: pointer;
 }
 #user-name {
+
   cursor: pointer;
   position: relative;
   top: 2rem;
   left: 85%;
-  width: 10%;
+  width: fit-content;
   text-align: center;
   border: 1.5px solid lightgreen;
   padding: 2px 10px;
   border-radius: 15px;
-  color: black;
+  color: white;
   font-size: 1.8vw;
+}
+#user-name:hover{
+  cursor: pointer;
+  color: lightgreen;
+  background-color: #555;
+  
 }
 #welcome-msg {
   position: absolute;
@@ -67,9 +75,23 @@ body {
   transform: translate(-50%);
   text-align: center;
   border: 1.5px solid lightgreen;
+  color: white;
   border-radius: 1rem;
   font-size: 1.3rem;
   animation-duration: 3500ms;
+}
+#get-curr-users{
+  color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  text-align: center;
+  transition: 500ms;
+  left: 0;
+  top: 0;
+  width: 10%;
+  border: 1.5px solid lightgreen;
+  border-radius: 4px;
+  cursor: pointer;
 }
 #chat-area {
   position: absolute;
@@ -78,15 +100,14 @@ body {
   width: 100%;
   height: 36rem;
   background-color: rgba(166, 168, 175, 0.5);
- 
 }
 #chat-room {
   position: relative;
-  top: 10%;
-  left: 1%;
-  width: 98%;
-  height: 80%;
-  background-color: white;
+  top: 0%;
+  left: 0.2%;
+  width: 99.6%;
+  height: 90%;
+  background-color: transparent;
   border-radius: 10px;
   border: 1.5px solid lightgreen;
   overflow-y: scroll;
@@ -136,7 +157,7 @@ body {
 .msg-sent *:first-child {
   text-align: right;
   font-size: 1.2rem;
-  color: #555;
+  color: black;
 }
 .msg-sent *:last-child {
   width: 100%;
@@ -159,19 +180,60 @@ body {
   padding-left: 5px;
   text-align: left;
   font-size: 1.2rem;
-  color: #555;
+  color: black;
 }
 .msg-recived *:last-child {
   width: 100%;
   border:none;
   background-color: lightgreen;
-  color: white;
+  color: black;
   border-radius: 5px;
   padding: 4px 8px;
   word-wrap: break-word;
 }
 ::-webkit-scrollbar {
   width: 2px;
+}
+#users{
+  position: absolute;
+  top: 10%;
+  left: 1%;
+  width: 15%;
+  height: 20%;
+  border-radius: 5px;
+  animation: 1000ms;
+}
+#users #users-list *{
+  list-style: none;
+  height: fit-content;
+}
+#users #users-list{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 80%;
+  text-shadow: 1px 1px 1px black;
+  overflow-y: scroll;
+  background-color: lightgreen;
+  color: white;
+  font-size: 1.2rem;
+}
+#users #cancel{
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 81%;
+  height: 19%;
+  border: 1.5px solid lightgreen;
+  border-radius: 3px;
+  background-color: #fff;
+  transition: 500ms;
+  cursor: pointer;
+}
+#users #cancel:hover{
+  color: lightgreen;
+  background-color: #555;
 }
 
 /* Track */
@@ -183,10 +245,6 @@ body {
 ::-webkit-scrollbar-thumb {
   background: lightgreen;
 }
-
-
-
-
 
 @keyframes popup {
   from {
