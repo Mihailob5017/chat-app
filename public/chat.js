@@ -11,7 +11,7 @@ document.getElementById('submit-button').addEventListener('click', e => {
 			EnableChat();
 		}, 1200);
 	} else {
-		alert('you need to fill in the name');
+		alert('Username cant be empty');
 	}
 });
 //EveryThins is writen in this main function
