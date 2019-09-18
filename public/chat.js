@@ -1,5 +1,6 @@
 var user = '';
 var socket = io();
+//Log in pop-up
 document.getElementById('login').style.animationName = 'popup';
 document.getElementById('submit-button').addEventListener('click', e => {
 	e.preventDefault();
@@ -14,13 +15,14 @@ document.getElementById('submit-button').addEventListener('click', e => {
 		alert('Username cant be empty');
 	}
 });
-//EveryThins is writen in this main function
+//enables the main function
 const EnableChat = () => {
-	//welcome board for the current user
+	//welcome message to the user
 	document.body.innerHTML += `<div id='welcome-msg'>Welcome ${user} to Chat's</div>`;
 	document.getElementById('welcome-msg').style.animationName = 'fade';
 	socket.emit('is online', user);
 	setTimeout(() => {
+		//removes and creates the necessary html
 		document.body.removeChild(document.getElementById('welcome-msg'));
 		document.body.innerHTML += `<div id="user-name">Log out</div>`;
 		document.body.innerHTML += `<div id='get-curr-users'>${user}</div>`;
@@ -35,26 +37,20 @@ const EnableChat = () => {
     </div>`;
 		CreateChat();
 	}, 3450);
-	//
-	//
-	//
-	//welcome for the other users
+	//send a alert message to other users that a new user is online
 	socket.on('is online', username => {
 		document.body.innerHTML += `<div id='welcome-msg'>${username} has just joined Chat's.Say hello</div>`;
 		document.getElementById('welcome-msg').style.animationName = 'fade';
 		setTimeout(() => {
 			document.body.removeChild(document.getElementById('welcome-msg'));
+			//For some odd reason i had to call this funtion each time a user logges in for all the users
 			CreateChat();
 		}, 3450);
-		//
-		//
-		//will add a chat enabled function where most of the code will be stored,maybe even import that code from another js page
 	});
 };
-//ask the user if
+//enables chat for all users once a user has logged in
 const CreateChat = () => {
 	const msgBtn = document.querySelector('#msg-container');
-	const getUsers = document.getElementById('get-curr-users');
 	msgBtn.addEventListener('submit', event => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -66,25 +62,18 @@ const CreateChat = () => {
         <h5>You:</h5>
         <p>${document.getElementById('msg').value}</p>
 	</li>`;
-	document.getElementById('msg').value='';
+		document.getElementById('msg').value = '';
 	});
-	//
-	//
-	//
 
+	//When a user logs out,it will send a message to other users that he has logged out
 	document.getElementById('user-name').addEventListener('click', async () => {
 		if (confirm('are you sure you want to Log Out')) {
 			await socket.emit('dissconnect', user);
 			window.location.reload(true);
 		}
 	});
-	//
-	//
-	//
-	getUsers.addEventListener('click', () => {
-		socket.emit('get users', user);
-	});
 };
+//reusing the #welcome-msg component for logging in,alerting other users about logging in ,and alerting other users about logging out
 socket.on('dissconnect', username => {
 	document.body.innerHTML += `<div id='welcome-msg'>${username} has left Chat's</div>`;
 	document.getElementById('welcome-msg').style.animationName = 'fade';
@@ -93,6 +82,7 @@ socket.on('dissconnect', username => {
 		CreateChat();
 	}, 3450);
 });
+//adds a message to the board for the reciver
 socket.on('chat message', obj => {
 	const { user, message } = obj;
 	document.getElementById('chat-room').innerHTML += `<li class='msg-recived'>
