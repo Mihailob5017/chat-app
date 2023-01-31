@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 import { Input } from '@chakra-ui/react';
-import { upperCaseName } from '../helpers/constants';
+import { upperCaseName } from '../helpers/helpers';
 type Props = {
   type: string;
   placeholder: string;
