@@ -1,20 +1,17 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ToggleColorMode from './components/ToggleColorMode';
+import Views from './components/Views';
 
-export function App() {
+type Props = {};
+
+function App(props: Props) {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <Views />
+      <ToggleColorMode />
+    </>
   );
 }
 
-export function WrappedApp() {
-  return (
-    <HashRouter>
-      <App />
-    </HashRouter>
-  );
-}
+export default App;
