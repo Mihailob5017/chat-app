@@ -1,16 +1,5 @@
 interface Message {
-  username_required: string;
-  password_required: string;
-  username_invalid: string;
-  password_invalid: string;
-  username_taken: string;
-  username_min_length: string;
-  username_max_length: string;
-  password_min_length: string;
-  password_min_number: string;
-  password_min_uppercase: string;
-  username_placeholder: string;
-  password_placeholder: string;
+  [key: string]: string;
 }
 
 export const messages: Message = {
@@ -26,4 +15,6 @@ export const messages: Message = {
   password_min_uppercase: 'Password must  have at least one uppercase letter',
   username_placeholder: 'Enter username',
   password_placeholder: 'Enter password',
+  confirm_password_label: 'Confirm password',
+  confirm_password_mismatch: 'Passwords dont match',
 };

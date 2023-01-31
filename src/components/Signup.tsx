@@ -26,6 +26,9 @@ const Signup = (props: LoginProps) => {
         .min(6, messages.password_min_length)
         .minUppercase(1, messages.password_min_uppercase)
         .minNumbers(1, messages.password_min_number),
+      confirmPassword: Yup.string()
+        .required(messages.password_required)
+        .oneOf([Yup.ref('password'), null], messages.confirm_password_mismatch),
     }),
     onSubmit: (values: FormikConfigType, actions: object): void => {},
   };
@@ -44,11 +47,12 @@ const Signup = (props: LoginProps) => {
         formik={formik}
         placeholder={messages.username_placeholder}
       />
+      <InputComponent name="password" formik={formik} type="password" />
       <InputComponent
-        name="password"
+        name="confirmPassword"
+        label={messages.confirm_password_label}
         formik={formik}
         type="password"
-        placeholder={messages.password_placeholder}
       />
       <ButtonGroup pt="1rem">
         <Button colorScheme="teal" type="submit">

@@ -7,11 +7,13 @@ type Props = {
   placeholder: string;
   name: string;
   formik: any;
+  label: string;
 };
 
 const InputComponent = ({
+  label,
   type = 'text',
-  placeholder,
+  placeholder = '',
   name,
   formik,
 }: Props) => {
@@ -19,7 +21,9 @@ const InputComponent = ({
     <FormControl
       isInvalid={formik.touched && formik.errors[name] ? true : false}
     >
-      <FormLabel fontSize="lg">{upperCaseName(name)}</FormLabel>
+      <FormLabel fontSize="lg">
+        {label !== '' ? label : upperCaseName(name)}
+      </FormLabel>
       <Input
         type={type}
         size="lg"
@@ -39,11 +43,14 @@ InputComponent.propTypes = {
     touched: PropTypes.any,
   }),
   name: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
 };
 InputComponent.defaultProps = {
   type: 'text',
+  label: '',
+  placeholder: '',
 };
 
 export default InputComponent;
