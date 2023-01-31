@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from './login/Login';
-import Signup from './login/Signup';
+import Login from './Login';
+import Signup from './Signup';
 
 type Props = {};
 
