@@ -1,14 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
+import { ThemeInterface } from './types';
 
-interface themeInterface {
-  config: {
-    initalColorMode: string;
-    useSystemColorMode: boolean;
-  };
-  styles: object;
-}
-
-const theme: themeInterface = {
+const theme: ThemeInterface = {
   config: {
     initalColorMode: 'dark',
     useSystemColorMode: true,
