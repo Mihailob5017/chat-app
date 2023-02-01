@@ -6,6 +6,7 @@ import { messages } from '../helpers/messages';
 import YupPassword from 'yup-password';
 import InputComponent from './Input';
 import { useNavigate } from 'react-router-dom';
+import { fetchCredentials, LOGIN_URL } from '../helpers/helpers';
 
 YupPassword(Yup);
 
@@ -26,7 +27,15 @@ const Login = (props: LoginProps) => {
         .minUppercase(1, messages.password_min_uppercase)
         .minNumbers(1, messages.password_min_number),
     }),
-    onSubmit: (values: FormikConfigType, actions: object): void => {},
+    onSubmit: async (
+      values: FormikConfigType,
+      actions: object
+    ): Promise<void> => {
+      const response = await fetchCredentials(LOGIN_URL, {
+        username: values.username,
+        password: values.password,
+      });
+    },
   };
   const formik = useFormik<FormikConfigType>(formikConfig);
   const navigate = useNavigate();

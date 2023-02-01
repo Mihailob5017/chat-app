@@ -31,15 +31,15 @@ const Signup = (props: LoginProps) => {
         .required(messages.password_required)
         .oneOf([Yup.ref('password'), null], messages.confirm_password_mismatch),
     }),
-    onSubmit: (
+    onSubmit: async (
       values: FormikConfigType,
       actions: FormikHelpers<FormikConfigType>
-    ): void => {
-      fetchCredentials(SIGNUP_URL, {
+    ): Promise<void> => {
+      const response = await fetchCredentials(SIGNUP_URL, {
         username: values.username,
         password: values.password,
       });
-      actions.resetForm();
+      // actions.resetForm();
     },
   };
 
