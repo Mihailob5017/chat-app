@@ -41,3 +41,15 @@ export interface ResponseParams {
     displayMessage: string;
   } | null;
 }
+
+export interface MessageInterface {
+  [key: string]: string;
+}
+
+export interface ThemeInterface {
+  config: {
+    initalColorMode: string;
+    useSystemColorMode: boolean;
+  };
+  styles: object;
+}

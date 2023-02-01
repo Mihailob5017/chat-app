@@ -1,8 +1,5 @@
-interface Message {
-  [key: string]: string;
-}
-
-export const messages: Message = {
+import { MessageInterface } from './types';
+export const messages: MessageInterface = {
   username_required: 'Username required',
   password_required: 'Password required',
   username_invalid: '',
