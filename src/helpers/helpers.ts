@@ -64,4 +64,3 @@ export const fetchCredentials = async (
 
   return responseObject;
 };
-

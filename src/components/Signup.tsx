@@ -16,6 +16,7 @@ const Signup = (props: LoginProps) => {
     initialValues: {
       username: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()

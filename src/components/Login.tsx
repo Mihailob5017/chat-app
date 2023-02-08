@@ -1,11 +1,12 @@
 import { ButtonGroup, VStack, Button, Heading } from '@chakra-ui/react';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoginProps, FormikConfigType, VStackProps } from '../helpers/types';
 import { messages } from '../helpers/messages';
 import YupPassword from 'yup-password';
 import InputComponent from './Input';
 import { useNavigate } from 'react-router-dom';
+import { fetchCredentials, LOGIN_URL } from '../helpers/helpers';
 
 YupPassword(Yup);
 
@@ -26,7 +27,16 @@ const Login = (props: LoginProps) => {
         .minUppercase(1, messages.password_min_uppercase)
         .minNumbers(1, messages.password_min_number),
     }),
-    onSubmit: (values: FormikConfigType, actions: object): void => {},
+    onSubmit: (
+      values: FormikConfigType,
+      actions: FormikHelpers<FormikConfigType>
+    ): void => {
+      fetchCredentials(LOGIN_URL, {
+        username: values.username,
+        password: values.password,
+      });
+      actions.resetForm();
+    },
   };
   const formik = useFormik<FormikConfigType>(formikConfig);
   const navigate = useNavigate();
