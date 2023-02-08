@@ -7,10 +7,14 @@ import YupPassword from 'yup-password';
 import InputComponent from './Input';
 import { useNavigate } from 'react-router-dom';
 import { fetchCredentials, LOGIN_URL } from '../helpers/helpers';
-
+import { useDispatch } from 'react-redux';
+import { actions as reduxActions } from '../redux/slices';
+import { calcLength } from 'framer-motion';
+import { g } from 'vitest/dist/index-ea17aa0c';
 YupPassword(Yup);
 
 const Login = (props: LoginProps) => {
+  const dispatch = useDispatch();
   const formikConfig = {
     initialValues: {
       username: '',
@@ -27,15 +31,19 @@ const Login = (props: LoginProps) => {
         .minUppercase(1, messages.password_min_uppercase)
         .minNumbers(1, messages.password_min_number),
     }),
-    onSubmit: (
+    onSubmit: async (
       values: FormikConfigType,
       actions: FormikHelpers<FormikConfigType>
-    ): void => {
-      fetchCredentials(LOGIN_URL, {
+    ): Promise<void> => {
+      const data = await fetchCredentials(LOGIN_URL, {
         username: values.username,
         password: values.password,
       });
-      actions.resetForm();
+      if (data.user !== null) {
+        actions.resetForm();
+        dispatch(reduxActions.setCredentials(data.user));
+        navigate('/home');
+      }
     },
   };
   const formik = useFormik<FormikConfigType>(formikConfig);

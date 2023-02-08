@@ -8,10 +8,12 @@ import InputComponent from './Input';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { fetchCredentials, SIGNUP_URL } from '../helpers/helpers';
-
+import { useDispatch } from 'react-redux';
+import { actions as reduxActions } from '../redux/slices';
 YupPassword(Yup);
 
 const Signup = (props: LoginProps) => {
+  const dispatch = useDispatch();
   const formikConfig = {
     initialValues: {
       username: '',
@@ -32,15 +34,19 @@ const Signup = (props: LoginProps) => {
         .required(messages.password_required)
         .oneOf([Yup.ref('password'), null], messages.confirm_password_mismatch),
     }),
-    onSubmit: (
+    onSubmit: async (
       values: FormikConfigType,
       actions: FormikHelpers<FormikConfigType>
-    ): void => {
-      fetchCredentials(SIGNUP_URL, {
+    ): Promise<void> => {
+      const data = await fetchCredentials(SIGNUP_URL, {
         username: values.username,
         password: values.password,
       });
-      actions.resetForm();
+      if (data.user !== null) {
+        actions.resetForm();
+        dispatch(reduxActions.setCredentials(data.user));
+        navigate('/home');
+      }
     },
   };
 

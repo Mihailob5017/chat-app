@@ -22,7 +22,7 @@ export const fetchCredentials = async (
     .then((response) => {
       if (!response || !response.ok || response.status >= 400)
         return {
-          data: null,
+          user: null,
           success: false,
           error: {
             message: 'Failed to fetch data from the server',
@@ -35,7 +35,7 @@ export const fetchCredentials = async (
     .then((data) => {
       if (!data && data.length === 0) {
         return {
-          data: null,
+          user: null,
           success: false,
           error: {
             message: 'Failed to fetch data from the server',
@@ -43,17 +43,11 @@ export const fetchCredentials = async (
           },
         };
       }
-      return {
-        data: {
-          user: data,
-        },
-        success: true,
-        error: null,
-      };
+      return data;
     })
     .catch((err) => {
       return {
-        data: null,
+        user: null,
         success: false,
         error: {
           message: err.messages[0],

@@ -29,11 +29,9 @@ export interface SignUpParams {
 }
 
 export interface ResponseParams {
-  data: {
-    user: {
-      username: any;
-      password: any;
-    };
+  user: {
+    username: any;
+    password: any;
   } | null;
   success: boolean;
   error: {
@@ -46,6 +44,10 @@ export interface MessageInterface {
   [key: string]: string;
 }
 
+export interface CredentialsInterface {
+  username: string;
+  password: string;
+}
 export interface ThemeInterface {
   config: {
     initalColorMode: string;
