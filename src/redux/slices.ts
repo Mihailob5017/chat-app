@@ -3,15 +3,13 @@ import YupPassword from 'yup-password';
 import { CredentialsInterface } from '../helpers/types';
 
 interface State {
-  username: string;
-  password: string;
-  isLogedIn: boolean;
+  username: string | null;
+  isLoggedIn: boolean;
 }
 
 const initialState: State = {
   username: '',
-  password: '',
-  isLogedIn: false,
+  isLoggedIn: false,
 };
 
 export const storeSlice = createSlice({
@@ -19,23 +17,18 @@ export const storeSlice = createSlice({
   initialState: initialState,
   reducers: {
     setUsername: (state, action: PayloadAction<string>) => {
-      console.log(state, action);
       state.username = action.payload;
-    },
-    setPassword: (state, action: PayloadAction<string>) => {
-      state.password = action.payload;
     },
 
     setCredentials: (state, action: PayloadAction<CredentialsInterface>) => {
-      state.username = action.payload.username;
-      state.password = action.payload.password;
-      state.isLogedIn = true;
+      state.username = action.payload.user.username;
+      state.isLoggedIn = true;
     },
     logIn: (state) => {
-      state.isLogedIn = true;
+      state.isLoggedIn = true;
     },
     logOut: (state) => {
-      state.isLogedIn = false;
+      state.isLoggedIn = false;
     },
   },
 });

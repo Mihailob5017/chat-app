@@ -1,3 +1,4 @@
+import YupPassword from 'yup-password';
 export interface LoginProps {}
 
 export interface VstackType {
@@ -45,9 +46,12 @@ export interface MessageInterface {
 }
 
 export interface CredentialsInterface {
-  username: string;
-  password: string;
+  user: {
+    username: string | null;
+  };
+  userLoggedIn?: boolean;
 }
+
 export interface ThemeInterface {
   config: {
     initalColorMode: string;

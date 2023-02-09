@@ -6,11 +6,14 @@ import { messages } from '../helpers/messages';
 import YupPassword from 'yup-password';
 import InputComponent from './Input';
 import { useNavigate } from 'react-router-dom';
-import { fetchCredentials, LOGIN_URL } from '../helpers/helpers';
+import {
+  setCredentials,
+  LOGIN_URL,
+  formatCredentials,
+} from '../helpers/helpers';
 import { useDispatch } from 'react-redux';
 import { actions as reduxActions } from '../redux/slices';
 import { calcLength } from 'framer-motion';
-import { g } from 'vitest/dist/index-ea17aa0c';
 YupPassword(Yup);
 
 const Login = (props: LoginProps) => {
@@ -35,13 +38,14 @@ const Login = (props: LoginProps) => {
       values: FormikConfigType,
       actions: FormikHelpers<FormikConfigType>
     ): Promise<void> => {
-      const data = await fetchCredentials(LOGIN_URL, {
+      const data = await setCredentials(LOGIN_URL, {
         username: values.username,
         password: values.password,
       });
       if (data.user !== null) {
-        actions.resetForm();
-        dispatch(reduxActions.setCredentials(data.user));
+        // actions.resetForm();
+        const formatedData = formatCredentials(data);
+        dispatch(reduxActions.setCredentials(formatedData));
         navigate('/home');
       }
     },

@@ -10,10 +10,8 @@ const Views = (props: Props) => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/register" element={<Signup />} />
-      <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<Home />} />
-      </Route>
       <Route path="*" element={<Login />} />
     </Routes>
   );

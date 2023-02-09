@@ -1,4 +1,4 @@
-import { SignUpParams, ResponseParams } from './types';
+import { SignUpParams, ResponseParams, CredentialsInterface } from './types';
 export const upperCaseName = (name: string): string => {
   if (name === '') return name;
   return name.charAt(0).toUpperCase() + name.slice(1);
@@ -6,8 +6,28 @@ export const upperCaseName = (name: string): string => {
 export const SIGNUP_URL: string = 'http://localhost:4001/auth/signup';
 export const LOGIN_URL: string = 'http://localhost:4001/auth/login';
 
-//TODO: There must be a better way to do this,find a better way
-export const fetchCredentials = async (
+export const fetchCredentials = async (): Promise<CredentialsInterface> => {
+  const response = await fetch(LOGIN_URL, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response || !response.ok || response.status >= 400)
+        return { user: null, userLoggedIn: false };
+      return response.json();
+    })
+    .then((data) => data)
+    .catch((err) => {
+      return { user: null, userLoggedIn: false };
+    });
+
+  return response;
+};
+
+export const setCredentials = async (
   url: string,
   body: SignUpParams
 ): Promise<ResponseParams> => {
@@ -57,4 +77,23 @@ export const fetchCredentials = async (
     });
 
   return responseObject;
+};
+
+export const formatCredentials = (
+  credentials: CredentialsInterface | ResponseParams
+): CredentialsInterface => {
+  if (credentials === null || credentials.user === null)
+    return { user: { username: null }, userLoggedIn: false };
+
+  if (Object.keys(credentials).includes('success')) {
+    return {
+      user: { username: credentials.user.username },
+      userLoggedIn: true,
+    };
+  } else {
+    return {
+      user: { username: credentials.user.username },
+      userLoggedIn: true,
+    };
+  }
 };

@@ -1,13 +1,17 @@
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const useAuth = (): boolean => {
-  const user = { loggedIn: false };
-  return user && user.loggedIn;
-};
-
 const PrivateRoutes = () => {
-  const isAuth = useAuth();
-  return isAuth ? <Outlet /> : <Navigate to="/" />;
+  console.log('PrivateRoutes triggered');
+  const isUserLoggedIn = useSelector(
+    (state: any): any => state.state.isLoggedIn
+  );
+  console.log(isUserLoggedIn);
+  return isUserLoggedIn === true ? (
+    <Navigate to="/home" />
+  ) : (
+    <Navigate to="/login" />
+  );
 };
 
 export default PrivateRoutes;
